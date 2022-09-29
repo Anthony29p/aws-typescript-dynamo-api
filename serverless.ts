@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+// import hello from '@functions/hello';
 
 const serverlessConfiguration: AWS = {
   service: 'aws-typescript-api',
@@ -20,7 +20,19 @@ const serverlessConfiguration: AWS = {
     region:'sa-east-1',
   },
   // import the function via paths
-  functions: { hello },
+  functions: { 
+    test: {
+      handler: 'test.test',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'test',
+          }
+        }
+      ]
+    } 
+  },
   package: { individually: true },
   custom: {
     esbuild: {
