@@ -22,12 +22,34 @@ const serverlessConfiguration: AWS = {
   // import the function via paths
   functions: { 
     test: {
-      handler: 'test.test',
+      handler: 'src/functions/test.test',
       events: [
         {
           http: {
             method: 'get',
             path: 'test',
+          }
+        }
+      ]
+    },
+    getCard: {
+      handler: 'src/functions/getCard.getCard',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'getCard',
+          }
+        }
+      ]
+    },
+    postCard: {
+      handler: 'src/functions/postCard.postCard',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'postCard',
           }
         }
       ]
