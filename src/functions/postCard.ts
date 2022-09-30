@@ -1,13 +1,17 @@
 import { APIGatewayProxyHandler } from 'aws-lambda'
 const { v4 } = require('uuid');
 const AWS = require('aws-sdk')
+const jwt =  require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const postCard: APIGatewayProxyHandler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-  const { card_number,cvv,expiration_month,expiration_year,email } = JSON.parse(event.body);
+  let { card_number,cvv,expiration_month,expiration_year,email } = JSON.parse(event.body);
   const createdAt = new Date();
   const id = v4()
+
+  const token:string =jwt.sign({id},'tokenKey',{expiresIn:15*60*1000})
 
   const newCard = {
     id,
@@ -19,6 +23,7 @@ const postCard: APIGatewayProxyHandler = async (event) => {
     createdAt,
   }
 
+
   await dynamodb
   .put({
     TableName: "CardsTable",
@@ -28,7 +33,10 @@ const postCard: APIGatewayProxyHandler = async (event) => {
 
   return{
     statusCode: 200,
-    body: JSON.stringify(newCard)
+    body: JSON.stringify(newCard),
+    headers: {
+      'auth-token': token,
+    },
   }
   
 }
