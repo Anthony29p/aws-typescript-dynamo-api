@@ -17,7 +17,7 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
-    region:'sa-east-1',
+    region:'us-east-2',
   },
   // import the function via paths
   functions: { 
@@ -54,6 +54,40 @@ const serverlessConfiguration: AWS = {
         }
       ]
     } 
+  },
+  resources:{
+    Resources: {
+      CardsTable:{
+        Type: 'AWS::DynamoDB::Table',
+        Properties:{
+          TableName: "CardsTable",
+          KeySchema: [
+            {
+            AttributeName: "id",
+            KeyType: "HASH"
+          },
+          {
+            AttributeName: "card_number",
+            KeyType: "RANGE"
+          }
+          ],
+          AttributeDefinitions: [
+            {
+            AttributeName: "id",
+            AttributeType: "S",
+            },
+            {
+              AttributeName: "card_number",
+              AttributeType: "N",
+            },
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1
+          },
+        }
+      }
+    },
   },
   package: { individually: true },
   custom: {
