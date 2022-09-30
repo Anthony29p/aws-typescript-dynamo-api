@@ -15,8 +15,10 @@
     "@middy/http-json-body-parser": "^2.5.3",
     "@typegoose/typegoose": "^9.12.1",
     "aws": "^0.0.3-2",
+    "aws-sdk": "^2.1226.0",
     "lambda": "^0.10.3",
-    "mongoose": "^6.6.2"
+    "mongoose": "^6.6.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@serverless/typescript": "^3.0.0",

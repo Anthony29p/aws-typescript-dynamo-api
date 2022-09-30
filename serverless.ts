@@ -18,6 +18,13 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
     region:'us-east-2',
+    iamRoleStatements:[
+      {
+        Effect: 'Allow',
+        Action: ['dynamodb:*'],
+        Resource: ['arn:aws:dynamodb:us-east-2:322714799116:table/CardsTable'],
+      },
+    ]
   },
   // import the function via paths
   functions: { 
@@ -27,7 +34,7 @@ const serverlessConfiguration: AWS = {
         {
           http: {
             method: 'get',
-            path: 'test',
+            path: '/test',
           }
         }
       ]
@@ -38,7 +45,7 @@ const serverlessConfiguration: AWS = {
         {
           http: {
             method: 'get',
-            path: 'getCard',
+            path: '/',
           }
         }
       ]
@@ -48,8 +55,8 @@ const serverlessConfiguration: AWS = {
       events: [
         {
           http: {
-            method: 'get',
-            path: 'postCard',
+            method: 'put',
+            path: '/',
           }
         }
       ]

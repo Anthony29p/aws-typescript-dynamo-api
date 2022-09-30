@@ -1,16 +1,35 @@
 import { APIGatewayProxyHandler } from 'aws-lambda'
-// import 'source-map-support/register'
+const { v4 } = require('uuid');
+const AWS = require('aws-sdk')
 
-export const postCard: APIGatewayProxyHandler = async (event,_context) => {
-  return {
+const postCard: APIGatewayProxyHandler = async (event) => {
+  const dynamodb = new AWS.DynamoDB.DocumentClient();
+
+  const { card_number } = JSON.parse(event.body);
+  const createdAt = new Date();
+  const id = v4()
+
+  const newCard = {
+    id,
+    card_number,
+    createdAt
+  }
+
+  await dynamodb
+  .put({
+    TableName: "CardsTable",
+    Item: newCard
+  })
+  .promise()
+
+  return{
     statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Posting Cards",
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-};
+    body: JSON.stringify(newCard)
+  }
+  
+}
+
+
+module.exports = {
+  postCard,
+}
