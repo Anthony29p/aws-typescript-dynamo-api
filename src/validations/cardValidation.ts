@@ -40,6 +40,11 @@ export const yearValidation = (year:any) => {
 }
 
 export const emailValidation = (email:any) => {
-
-    return(typeof email === 'string' )
+    if(typeof email !== 'string' || email.indexOf('@') === -1){
+        return(false)
+    }
+    
+    let mailList =['gmail.com','hotmail.com','yahoo.es']
+    const mailType = email.substring(email.indexOf('@')+1,email.length)
+    return(mailList.some(m => m === mailType))
 }

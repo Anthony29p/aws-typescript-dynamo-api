@@ -21,6 +21,7 @@ const postCard: APIGatewayProxyHandler = async (event) => {
   if(!validations.cvvValidation(cvv)){error +=' cvv'}
   if(!validations.monthValidation(expiration_month)){error +=' expiration_month'}
   if(!validations.yearValidation(expiration_year)){error +=' expiration_year'}
+  if(!validations.emailValidation(email)){error +=' email'}
   
   const newCard = {
     id,
@@ -32,16 +33,14 @@ const postCard: APIGatewayProxyHandler = async (event) => {
     createdAt,
   }
 
-
-  await dynamodb
-  .put({
-    TableName: "CardsTable",
-    Item: newCard
-  })
-  .promise()
-
-
   if(error==='error at'){
+    await dynamodb
+    .put({
+      TableName: "CardsTable",
+      Item: newCard
+    })
+    .promise()
+
     return{
       statusCode: 200,
       body: JSON.stringify(newCard),
@@ -54,7 +53,7 @@ const postCard: APIGatewayProxyHandler = async (event) => {
     return{
       statusCode: 400,
       body: JSON.stringify(error),
-      
+
     }
   }
 }
