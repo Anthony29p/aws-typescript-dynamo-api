@@ -36,6 +36,10 @@ export const monthValidation = (month:any) => {
 export const yearValidation = (year:any) => {
     let fecha = new Date();
     let año = fecha.getFullYear()
-    return(typeof year === 'string' && año<=Number(year)-5 && Number(year)<=año+5)
+    return(typeof year === 'string' && año-5<=Number(year) && Number(year)<=año+5)
 }
 
+export const emailValidation = (email:any) => {
+
+    return(typeof email === 'string' )
+}
