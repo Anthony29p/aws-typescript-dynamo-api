@@ -60,7 +60,18 @@ const serverlessConfiguration: AWS = {
           }
         }
       ]
-    } 
+    },
+    mongoTest: {
+      handler: 'src/functions/mongoTest.mongoTest',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: '/mongoTest',
+          }
+        }
+      ]
+    },
   },
   resources:{
     Resources: {
