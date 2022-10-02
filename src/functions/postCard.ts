@@ -12,10 +12,11 @@ const postCard: APIGatewayProxyHandler = async (event) => {
 
   const date = new Date();
   let createdAt = date.toString()
-
+  
   const id = v4()
   const token:string =jwt.sign({id},'tokenKey',{expiresIn:15*60*1000})
 
+  //errors generation
   let error:string = 'error at';
   if(!validations.cardValidation(card_number)){error +=' card_number'}
   if(!validations.cvvValidation(cvv)){error +=' cvv'}
